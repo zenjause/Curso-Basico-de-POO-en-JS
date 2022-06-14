@@ -1,3 +1,26 @@
+class Comment{
+    constructor({
+        content,
+        studentName,
+        studentRole = "estudiante",
+    }){
+        this.content = content;
+        this.studentName = studentName;
+        this.studentRole = studentRole;
+        this.like = 0;
+    }
+
+    publicar (){
+        console.log(this.studentName + "(" + this.studentRole + ")");
+        console.log(this.likes + "likes");
+        console.log(this.content);
+    }
+}
+
+
+
+
+
 class clasesitas{
     constructor({
         name,
@@ -31,9 +54,13 @@ class Course {
     constructor({
         name,
         classes = [],
+        isFree = false,
+        lang = "spanish",
     }){
         this._name = name;
         this.classes = classes;
+        this.isFree = isFree;
+        this.lang = lang;
     }
 
     get name (){
@@ -56,6 +83,7 @@ class Course {
 
 const cursoProgBasica = new Course({
     name: "Curso de Programacion Basica Gratis",
+    isFree: true,
     classes:[
             ClaseDeComputacion    ]
 
@@ -75,6 +103,7 @@ const cursoDefinitivoHTML = new Course({
 
 const cursoPracticoHTML = new Course({
     name: "Curso Practico de HTML y CSS",
+    lang:"english",
     
     classes:[
         ClaseDeEditoresDeTexto,
@@ -180,6 +209,11 @@ const escuelaVideojuegos = new LearningPath({
 });
 
 
+
+
+
+
+
 class Student{
     constructor({
         name,
@@ -202,9 +236,81 @@ class Student{
         this.approvedCourses = [] = approvedCourses;
         this.learningPaths   =[]  = learningPaths;
     };
+
+    publicarComentario(commentContent){
+        const commnet = new Comment({
+            content: commentContent,
+            studentName: this.name,
+        });
+
+        commnet.publicar();
+    }
 };
 
-const juan2 = new Student({
+class FreeStudent extends Student{
+    constructor(props){
+        super(props);
+    } 
+
+    approveCourse(newCourse){
+        if (newCourse.isFree){
+            this.approvedCourses.push(newCourse);
+        }else{
+            console.warn("Lo sentimos," + this.name + ",solo puedes tomar cursos abiertos");
+        }
+    }
+};
+
+class BasicStudent extends Student{
+    constructor(props){
+        super(props);
+    }
+
+    approveCourse(newCourse){
+        if (newCourse.lang !== "english"){
+            this.approvedCourses.push(newCourse);
+        }else{
+            console.warn("Lo sentimos," + this.name + ",no puedes tomar cursos en ingles");
+        }
+    }
+};
+
+
+
+class ExpertStudent extends Student{
+    constructor(props){
+        super(props);
+    }
+
+    approveCourse(newCourse){
+            this.approvedCourses.push(newCourse);
+       
+        }
+    
+};
+
+class TeacherStudent extends Student{
+    constructor(props){
+        super(props);
+    }
+
+    approveCourse(newCourse){
+        this.approvedCourses.push(newCourse);
+    }
+
+    publicarComentario(commentContent){
+        const commnet = new Comment({
+            content: commentContent,
+            studentName: this.name,
+            studentRole: "profesor",
+        });
+
+        commnet.publicar();
+    }
+}
+
+
+const juan2 = new FreeStudent({
     name: "JuanDC",
     username: "juandcz",
     email: "juanito@juanito.com", 
@@ -215,7 +321,7 @@ const juan2 = new Student({
     ]
 });
 
-const miguelito2 = new Student({
+const miguelito2 = new BasicStudent({
     name: "Miguelito2",
     username: "miguelitofeliz",
     email: "miguelito@juanito.com", 
@@ -236,4 +342,12 @@ const natalia2 = new Student({
         escuelaData,
         escuelaVideojuegos,
     ]
+});
+
+const freddy = new TeacherStudent({
+    name: "freddy vega",
+    username: "fredd ",
+    email: "fredy@juanito.com", 
+    instagram: "freddypro",
+   
 });
