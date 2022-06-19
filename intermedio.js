@@ -53,7 +53,11 @@ Object.freeze(juan);
 
 
 console.log(Object.getOwnPropertyDescriptors(juan));*/
+
+
 //formas de copiar con shallow copy
+
+
 /*const obj1 = {
     a:"a",
     b:"b",
@@ -71,4 +75,21 @@ for(prop in obj1){
 const obj3 = Object.assign({},obj1);
 const obj4 = Object.create(obj1);*/
 
-const
+
+//JSON.parse y JSON.stringify
+
+
+const obj1 = {
+    a:"a",
+    b:"b",
+    c:{
+        d:"d",
+        e:"e",
+    },
+
+    
+};
+
+
+const stringifiedComplexObj = JSON.stringify(obj1);
+const obj2 = JSON.parse(stringifiedComplexObj);
