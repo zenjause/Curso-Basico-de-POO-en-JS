@@ -126,7 +126,7 @@ for(let index = 0; index < numeritos.length; index++){
 
 
 // recursividad  deep copy 
-const obj1 = {
+/*const obj1 = {
     a:"a",
     b:"b",
     c:{
@@ -138,7 +138,7 @@ const obj1 = {
     }
 
     
-};
+};*/
 
 function isObject(subject){
     return typeof subject == "object";
@@ -180,4 +180,22 @@ function deepCopy(subject){
     return copySubject;
 };
 
+const studentBase = {
+    name: undefined,
+    email: undefined,
+    age: undefined,
+    approvedCourses: undefined,
+    learningPaths: undefined,
+    socialMedia:{
+        twitter: undefined,
+        instagram: undefined,
+        facebook: undefined,
+    },
+};
 
+const juan = deepCopy(studentBase);
+/*Object.defineProperty(juan, "name", {
+    value: "Juanito",
+    configurable: false,
+});*/
+Object.seal(juan);
