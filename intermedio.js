@@ -204,6 +204,8 @@ function deepCopy(subject){
 //Object.seal(juan);
 
 
+//factory pattern y RORO
+
 function requiredParam(param){
     throw new Error(param + " es obligatorio");
 }
@@ -218,13 +220,45 @@ function createStudent({
     approvedCourses = [],
     learningPaths = [],
 } = {}){
-    return{
-        name: name,
+
+    const private = {
+        "_name": name,
+    };
+
+    const public = {
+        email,
         age:18,
+        learningPaths,
         socialMedia: {
-            twitter: twitter,
+            twitter,
+            instagram,
+            facebook,
+        },
+        
+       readName (){
+            
+            return private["_name"];
+        },
+        changeName (newName){
+            
+            private["_name"] = newName;
         },
     };
+
+    Object.defineProperty(public, "readName",{
+        configurable:false,
+        writable: false,
+    });
+    Object.defineProperty(public, "changeName",{
+        configurable:false,
+        writable: false,
+    });
+
+    return public;
+        
+        
+       
+    
 };
 
 const juan = createStudent({email: "juan@frijoles.com", name: "Juanito"});
