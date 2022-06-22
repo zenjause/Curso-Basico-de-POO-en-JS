@@ -140,6 +140,9 @@ for(let index = 0; index < numeritos.length; index++){
     
 };*/
 
+
+//abstraccion con objetos literales y deep copy
+
 function isObject(subject){
     return typeof subject == "object";
 }
@@ -180,7 +183,7 @@ function deepCopy(subject){
     return copySubject;
 };
 
-const studentBase = {
+/*const studentBase = {
     name: undefined,
     email: undefined,
     age: undefined,
@@ -191,11 +194,37 @@ const studentBase = {
         instagram: undefined,
         facebook: undefined,
     },
-};
+};*/
 
-const juan = deepCopy(studentBase);
+//const juan = deepCopy(studentBase);
 /*Object.defineProperty(juan, "name", {
     value: "Juanito",
     configurable: false,
 });*/
-Object.seal(juan);
+//Object.seal(juan);
+
+
+function requiredParam(param){
+    throw new Error(param + " es obligatorio");
+}
+
+function createStudent({
+    name = requiredParam("name"),
+    email = requiredParam("email"),
+    age,
+    twitter,
+    instagram,
+    facebook,
+    approvedCourses = [],
+    learningPaths = [],
+} = {}){
+    return{
+        name: name,
+        age:18,
+        socialMedia: {
+            twitter: twitter,
+        },
+    };
+};
+
+const juan = createStudent({email: "juan@frijoles.com", name: "Juanito"});
